@@ -1,4 +1,3 @@
 node_modules
 .env
-client\\.gitignore
 package-lock.json
