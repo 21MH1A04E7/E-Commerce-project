@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import ImageTobase64 from "../solver/Tobase64";
 
 function SignUp() {
+  const navigate=useNavigate()
   const elementref = useRef();
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmpassword, setShowConfirmPassword] = useState(false);
@@ -33,9 +34,27 @@ function SignUp() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(data);
+    try{
+      const response = await fetch("http://localhost:8000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+    
+    const userres=await response.json()
+    if(!userres.success){
+      return
+    }
+    navigate('/login')
+    }catch(err){
+      console.log("hi")
+      console.log(err.message)
+    }
+    // console.log(data);
   };
 
   return (
