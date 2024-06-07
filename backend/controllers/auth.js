@@ -38,7 +38,7 @@ export const userSignup = async (req, res, next) => {
     });
 
     const response = await newUser.save();
-    console.log(response.password);
+    // console.log(response.password);
     const { password: pass, ...rest } = response._doc;
     return res.status(201).json({
       success: true,
@@ -65,8 +65,9 @@ export const userLogin = async (req, res, next) => {
 
     const userexit = await User.findOne({ email });
     if (!userexit) return next(handleError(404, "user not found"));
+
     const match = bcrypt.compareSync(password, userexit.password);
-    if (!match) return next(handleError(401, "wrong credential"));
+    if (!match) return next(handleError(401, "wrong credential!"));
     const payload = {
       _id: userexit._id,
       username: userexit.username,
@@ -74,31 +75,50 @@ export const userLogin = async (req, res, next) => {
       profilepic: userexit.profilepic,
     };
     //generate token
-    const token = jwt.sign(payload, process.env.SECRETKEY,{ expiresIn: '12h' });
-    console.log(token);
-    const {password:pass,...rest}=userexit._doc
-    return res.status(200).cookie("access_token", token, { httpOnly: true, secure: true, sameSite: 'Strict' }).json(rest);
+    const token =jwt.sign(payload, process.env.SECRETKEY, {
+      expiresIn: "12h",
+    });
+    // console.log(token);
+    const { password: pass,createdAt:cre,updatedAt:upda, ...rest } = userexit._doc;
+    return res
+      .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Strict",
+      })
+      .json({
+        success: true,
+        statusCode: 200,
+        data: rest,
+        token:token,
+        message:'login successfull'
+      });
   } catch (err) {
-        console.error("Internal server error in signup", err);
-        return res.status(500).json({
-            success: false,
-            statusCode: 500,
-            message: err.message,
+    console.error("Internal server error in signup", err);
+    return res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: err.message,
     });
   }
 };
 
 //logout
-export const userLogout=async(req,res,next)=>{
-    try{
-        await  res.clearCookie("access_token")
-        return res.status(200).json({message:"userlogout"})
-    }catch(err){
-        console.error("Internal server error in signup", err);
-        return res.status(500).json({
-            success: false,
-            statusCode: 500,
-            message: err.message,
-        });
-    }
-}
+export const userLogout = async (req, res, next) => {
+  try {
+    await res.clearCookie("access_token");
+    return res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: "userlogout sucessfull",
+    });
+  } catch (err) {
+    console.error("Internal server error in signup", err);
+    return res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: err.message,
+    });
+  }
+};

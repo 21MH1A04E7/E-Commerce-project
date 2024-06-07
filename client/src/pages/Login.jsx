@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Api from "../common/url.js";
 
 function Login() {
+  const navigate=useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -16,8 +18,29 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+        const response = await fetch(`${Api.login.url}`, {
+        method: Api.login.method,
+        credentials:'include',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const userres = await response.json();
+      if (!userres.success) {
+        alert("wrong credential!");
+        return 
+      }
+      alert(`${userres.token}`);
+      navigate('/')
+    } catch (err) {
+      console.log("hi");
+      console.log(err.message);
+    }
+
     console.log(data);
   };
 

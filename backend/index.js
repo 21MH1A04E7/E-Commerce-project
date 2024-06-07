@@ -3,7 +3,9 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { DatabaseConnection } from './config/db.js'
 dotenv.config()
+import cookieParser from 'cookie-parser'
 import authRouter from './routes/auth.js'
+
 
 const app=express()
 DatabaseConnection(process.env.MONGO_URL)
@@ -14,8 +16,12 @@ DatabaseConnection(process.env.MONGO_URL)
     console.log(err.message)
 })
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173', // Update to your front-end URL
+    credentials: true,
+}))
 app.use(express.json())
+app.use(cookieParser())
 
 app.use('/api',authRouter)
 

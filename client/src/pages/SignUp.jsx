@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import ImageTobase64 from "../solver/Tobase64";
+import Api from "../common/url.js"
 
 function SignUp() {
   const navigate=useNavigate()
@@ -19,7 +20,6 @@ function SignUp() {
 
   const handleUpload = async (e) => {
     const file = e.target.files[0];
-    // console.log(file)
     const imageUrl = await ImageTobase64(file);
     console.log(imageUrl);
     setData({
@@ -37,8 +37,8 @@ function SignUp() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      const response = await fetch("http://localhost:8000/api/auth/signup", {
-        method: "POST",
+      const response = await fetch(`${Api.signUp.url}`, {
+        method:Api.signUp.method,
         headers: {
           "Content-Type": "application/json"
         },
@@ -47,14 +47,13 @@ function SignUp() {
     
     const userres=await response.json()
     if(!userres.success){
+      alert(userres.message)
       return
     }
     navigate('/login')
     }catch(err){
-      console.log("hi")
-      console.log(err.message)
+      alert(err.message)
     }
-    // console.log(data);
   };
 
   return (
