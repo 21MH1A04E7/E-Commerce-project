@@ -91,7 +91,6 @@ export const userLogin = async (req, res, next) => {
         success: true,
         statusCode: 200,
         data: rest,
-        token:token,
         message:'login successfull'
       });
   } catch (err) {

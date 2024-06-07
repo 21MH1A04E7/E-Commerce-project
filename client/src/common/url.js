@@ -1,3 +1,5 @@
+import { userDetails } from "../../../backend/controllers/userDetails";
+
 const backendDomin="http://localhost:8000/api"
 
 const Api={
@@ -8,6 +10,10 @@ const Api={
     login:{
         url:`${backendDomin}/auth/login`,
         method:"POST"
+    },
+    userDetails:{
+        url:`${backendDomin}/auth/user-details`,
+        method:"GET"
     }
 }
 

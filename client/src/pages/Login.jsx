@@ -2,9 +2,13 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Api from "../common/url.js";
+import { useContext } from "react";
+import AppContext from "../context/index.js";
 
 function Login() {
   const navigate=useNavigate()
+  const {fetchuserDetails}=useContext(AppContext)
+
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -34,7 +38,8 @@ function Login() {
         alert("wrong credential!");
         return 
       }
-      alert(`${userres.token}`);
+      alert(`${userres.message}`);
+      fetchuserDetails()
       navigate('/')
     } catch (err) {
       console.log("hi");
