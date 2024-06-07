@@ -70,9 +70,6 @@ export const userLogin = async (req, res, next) => {
     if (!match) return next(handleError(401, "wrong credential!"));
     const payload = {
       _id: userexit._id,
-      username: userexit.username,
-      email: userexit.email,
-      profilepic: userexit.profilepic,
     };
     //generate token
     const token =jwt.sign(payload, process.env.SECRETKEY, {
@@ -111,6 +108,7 @@ export const userLogout = async (req, res, next) => {
       statusCode: 200,
       success: true,
       message: "userlogout sucessfull",
+      data:[]
     });
   } catch (err) {
     console.error("Internal server error in signup", err);

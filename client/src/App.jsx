@@ -8,8 +8,11 @@ import ForgotPassword from './pages/ForgotPassword';
 import SignUp from './pages/SignUp';
 import Api from './common/url.js'
 import AppContext from './context/index.js';
-function App() {
+import { useSelector, useDispatch } from 'react-redux';
+import { setuserDetails } from './store/userSlice.js';
 
+function App() {
+  const dispatch=useDispatch()
   const fetchuserDetails=async()=>{
     const response=await fetch(`${Api.userDetails.url}`,{
       method:Api.userDetails.method,
@@ -19,7 +22,9 @@ function App() {
       }
     })
     const userdata=await response.json()
-    // console.log("user",userdata)
+    if(userdata.success){
+      dispatch(setuserDetails(userdata.data))
+    }
   }
   useEffect(()=>{
     fetchuserDetails()

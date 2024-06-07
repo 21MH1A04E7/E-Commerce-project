@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Api from "../common/url.js";
 import { useContext } from "react";
 import AppContext from "../context/index.js";
+import { useSelector,useDispatch } from "react-redux";
 
 function Login() {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const {fetchuserDetails}=useContext(AppContext)
 
@@ -38,15 +40,11 @@ function Login() {
         alert("wrong credential!");
         return 
       }
-      alert(`${userres.message}`);
       fetchuserDetails()
       navigate('/')
     } catch (err) {
-      console.log("hi");
       console.log(err.message);
     }
-
-    console.log(data);
   };
 
   return (

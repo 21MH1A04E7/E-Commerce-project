@@ -3,7 +3,30 @@ import { Link } from "react-router-dom";
 import { BsSearchHeart } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
+import { useSelector,useDispatch } from "react-redux";
+import { setuserDetails } from "../store/userSlice.js";
+import Api from '../common/url.js'
+
 function Header() {
+  const user=useSelector((state)=>state?.user?.user)
+  const dispatch=useDispatch()
+  // console.log(user)
+  const handlelogout=async()=>{
+      try{
+        const response=await fetch(`${Api.logout.url}`,{
+          method:Api.logout.method,
+          credentials:'include',
+        })
+        const userres=await response.json()
+        // console.log(userres)
+        if(userres.success){
+          dispatch(setuserDetails([]))
+          alert(userres.message)
+        }
+      }catch(err){
+        console.log(err)
+      }
+  }
   return (
     <header className="bg-[#c2ecef] shadow-lg h-16">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
@@ -24,13 +47,13 @@ function Header() {
             placeholder="search..."
             className="h-full w-full outline-none px-2 rounded-l-full"
           ></input>
-          <div className="bg-[#3adb21] w-12 h-full rounded-r-full flex items-center justify-center text-white cursor-pointer hover:bg-red-500 lg:w-16 active:opacity-25">
+          <div className="bg-[#32cc1a] w-12 h-full rounded-r-full flex items-center justify-center text-white cursor-pointer hover:bg-red-500 lg:w-16 active:opacity-25">
             <BsSearchHeart />
           </div>
         </div>
         <div className="flex items-center gap-2 sm:gap-5">
           <div className="text-3xl">
-            <FaRegUser className="text-[#009432]" />
+            {user?.profilepic?(<img className="w-10 h-10 rounded-full bg-black outline-dotted outline-2 outline-red-300" src={user?.profilepic} alt={user?.username}/>):( <FaRegUser className="text-[#009432]" />)}
           </div>
           <div className="text-3xl relative">
             <span>
@@ -41,7 +64,18 @@ function Header() {
             </div>
           </div>
           <div>
-            <Link to="/login">
+            {user?.email?(<Link >
+              <button
+                className="bg-[#3f44e0] px-3 py-1 rounded-lg text-white  transition-transform transform-gpu hover:scale-105 active:opacity-70 lg:px-4"
+                style={{
+                  transition: "transform 0.3s ease",
+                }}
+                onClick={handlelogout}
+              >
+                Logout
+              </button>
+            </Link>):(
+              <Link to="/login">
               <button
                 className="bg-[#3f44e0] px-3 py-1 rounded-lg text-white  transition-transform transform-gpu hover:scale-105 active:opacity-70 lg:px-4"
                 style={{
@@ -51,6 +85,7 @@ function Header() {
                 Login
               </button>
             </Link>
+            )}
           </div>
         </div>
       </div>

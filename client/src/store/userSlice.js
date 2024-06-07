@@ -3,7 +3,7 @@ import { act } from 'react'
 
 const initialState = {
   user:null,
-  sucess:false,
+  loading:true,
 }
 
 export const userSlice = createSlice({
@@ -11,7 +11,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setuserDetails:(state, action)=>{
-        console.log(action.payload)
+        state.user=action.payload
     }
   },
 })

@@ -14,6 +14,10 @@ const Api={
     userDetails:{
         url:`${backendDomin}/auth/user-details`,
         method:"GET"
+    },
+    logout:{
+        url:`${backendDomin}/auth/logout`,
+        method:"POST"
     }
 }
 
