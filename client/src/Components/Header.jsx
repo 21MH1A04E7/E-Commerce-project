@@ -28,7 +28,7 @@ function Header() {
       }
   }
   return (
-    <header className="bg-[#c2ecef] shadow-lg h-16">
+    <header className="bg-[#c2ecef] shadow-lg h-16 fixed top-0 w-full z-[100]">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
         <Link to="/">
           <div className="cursor-pointer flex flex-nowrap">
