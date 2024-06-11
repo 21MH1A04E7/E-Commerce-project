@@ -1,32 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BsSearchHeart } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setuserDetails } from "../store/userSlice.js";
-import Api from '../common/url.js'
+import Api from "../common/url.js";
 
 function Header() {
-  const user=useSelector((state)=>state?.user?.user)
-  const dispatch=useDispatch()
+  const [showDisplay, setshowDisplay] = useState(false);
+  const user = useSelector((state) => state?.user?.user);
+  const dispatch = useDispatch();
   // console.log(user)
-  const handlelogout=async()=>{
-      try{
-        const response=await fetch(`${Api.logout.url}`,{
-          method:Api.logout.method,
-          credentials:'include',
-        })
-        const userres=await response.json()
-        // console.log(userres)
-        if(userres.success){
-          dispatch(setuserDetails([]))
-          alert(userres.message)
-        }
-      }catch(err){
-        console.log(err)
+  const handlelogout = async () => {
+    try {
+      const response = await fetch(`${Api.logout.url}`, {
+        method: Api.logout.method,
+        credentials: "include",
+      });
+      const userres = await response.json();
+      // console.log(userres)
+      if (userres.success) {
+        dispatch(setuserDetails([]));
+        alert(userres.message);
       }
-  }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <header className="bg-[#c2ecef] shadow-lg h-16 fixed top-0 w-full z-[100]">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
@@ -52,8 +53,31 @@ function Header() {
           </div>
         </div>
         <div className="flex items-center gap-2 sm:gap-5">
-          <div className="text-3xl">
-            {user?.profilepic?(<img className="w-10 h-10 rounded-full bg-black outline-dotted outline-2 outline-red-300" src={user?.profilepic} alt={user?.username}/>):( <FaRegUser className="text-[#009432]" />)}
+          <div className="relative flex justify-center">
+            <div className="text-3xl relative flex justify-center items-center cursor-pointer" onClick={()=>setshowDisplay((pre)=>!pre)}>
+              {user?.profilepic ? (
+                <img
+                  className="w-10 h-10 rounded-full bg-black outline-dotted outline-2 outline-red-300"
+                  src={user?.profilepic}
+                  alt={user?.username}
+                />
+              ) : (
+                <FaRegUser className="text-[#009432]" />
+              )}
+            </div>
+            {showDisplay ? (
+              <div className="absolute bottom-0 top-12 h-fit bg-[#ecf0f1] p-2 shadow-lg rounded-b-md hover:bg-slate-300 cursor-pointer">
+                <nav>
+                  <Link to={"/admin-pannel"}>
+                    <div className="text-[#080a0c] italic sm:whitespace-nowrap ">
+                      admin pannel
+                    </div>
+                  </Link>
+                </nav>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div className="text-3xl relative">
             <span>
@@ -64,27 +88,29 @@ function Header() {
             </div>
           </div>
           <div>
-            {user?.email?(<Link >
-              <button
-                className="bg-[#3f44e0] px-3 py-1 rounded-lg text-white  transition-transform transform-gpu hover:scale-105 active:opacity-70 lg:px-4"
-                style={{
-                  transition: "transform 0.3s ease",
-                }}
-                onClick={handlelogout}
-              >
-                Logout
-              </button>
-            </Link>):(
+            {user?.email ? (
+              <Link>
+                <button
+                  className="bg-[#3f44e0] px-3 py-1 rounded-lg text-white  transition-transform transform-gpu hover:scale-105 active:opacity-70 lg:px-4"
+                  style={{
+                    transition: "transform 0.3s ease",
+                  }}
+                  onClick={handlelogout}
+                >
+                  Logout
+                </button>
+              </Link>
+            ) : (
               <Link to="/login">
-              <button
-                className="bg-[#3f44e0] px-3 py-1 rounded-lg text-white  transition-transform transform-gpu hover:scale-105 active:opacity-70 lg:px-4"
-                style={{
-                  transition: "transform 0.3s ease",
-                }}
-              >
-                Login
-              </button>
-            </Link>
+                <button
+                  className="bg-[#3f44e0] px-3 py-1 rounded-lg text-white  transition-transform transform-gpu hover:scale-105 active:opacity-70 lg:px-4"
+                  style={{
+                    transition: "transform 0.3s ease",
+                  }}
+                >
+                  Login
+                </button>
+              </Link>
             )}
           </div>
         </div>

@@ -6,6 +6,7 @@ import About from './pages/About';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import SignUp from './pages/SignUp';
+import AdminPannel from './pages/AdminPannel.jsx';
 import Api from './common/url.js'
 import AppContext from './context/index.js';
 import { useSelector, useDispatch } from 'react-redux';
@@ -54,6 +55,10 @@ function App() {
         {
           path:'/sign-up',
           element:<SignUp/>
+        },
+        {
+          path:'/admin-pannel',
+          element:<AdminPannel/>
         }
       ]
     }
