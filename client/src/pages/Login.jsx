@@ -4,10 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import Api from "../common/url.js";
 import { useContext } from "react";
 import AppContext from "../context/index.js";
-import { useSelector,useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import {toast } from 'react-toastify';
+import {startLogin,loginSuccess} from "../store/userSlice.js"
 
 function Login() {
   const dispatch=useDispatch()
+  const {loading}=useSelector((state)=>state.user)
+
   const navigate=useNavigate()
   const {fetchuserDetails}=useContext(AppContext)
 
@@ -27,6 +31,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        dispatch(startLogin())
         const response = await fetch(`${Api.login.url}`, {
         method: Api.login.method,
         credentials:'include',
@@ -37,12 +42,16 @@ function Login() {
       });
       const userres = await response.json();
       if (!userres.success) {
-        alert("wrong credential!");
+        dispatch(loginSuccess())
+        toast.error("wrong credential!");
         return 
       }
       fetchuserDetails()
+      dispatch(loginSuccess())
+      toast.success(userres.message)
       navigate('/')
     } catch (err) {
+      dispatch(loginSuccess())
       console.log(err.message);
     }
   };
@@ -55,7 +64,7 @@ function Login() {
             <p className="text-xl font-semibold">Login</p>
           </div>
           <div className="mt-4">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id='f'>
               <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                   Email:
@@ -105,7 +114,7 @@ function Login() {
                 type="submit"
                 className="w-full bg-[#70a1ff] text-white py-2 rounded-lg hover:bg-[#0b5aed] focus:outline-none focus:ring-2 focus:ring-[#70a1ff] transition-colors duration-300"
               >
-                Login
+                {loading?"Login...":"Login"}
               </button>
               <div className="mt-2">
                 <p className="text-red-500">

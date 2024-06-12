@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { act } from 'react'
+
 
 const initialState = {
   user:null,
-  loading:true,
+  loading:false,
 }
 
 export const userSlice = createSlice({
@@ -12,11 +12,17 @@ export const userSlice = createSlice({
   reducers: {
     setuserDetails:(state, action)=>{
         state.user=action.payload
+    },
+    startLogin:(state)=>{
+      state.loading=true;
+    },
+    loginSuccess:(state)=>{
+      state.loading=false;
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setuserDetails} = userSlice.actions
+export const { setuserDetails,loginSuccess,startLogin} = userSlice.actions
 
 export default userSlice.reducer

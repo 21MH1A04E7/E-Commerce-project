@@ -5,6 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { setuserDetails } from "../store/userSlice.js";
+import { toast } from "react-toastify";
 import Api from "../common/url.js";
 
 function Header() {
@@ -19,10 +20,9 @@ function Header() {
         credentials: "include",
       });
       const userres = await response.json();
-      // console.log(userres)
       if (userres.success) {
         dispatch(setuserDetails([]));
-        alert(userres.message);
+        toast.success(userres.message);
       }
     } catch (err) {
       console.log(err);
