@@ -11,6 +11,8 @@ import Api from './common/url.js'
 import AppContext from './context/index.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { setuserDetails } from './store/userSlice.js';
+import AllUsers from './pages/AllUsers.jsx';
+import AllProducts from './pages/AllProducts.jsx'
 
 function App() {
   const dispatch=useDispatch()
@@ -58,7 +60,17 @@ function App() {
         },
         {
           path:'/admin-pannel',
-          element:<AdminPannel/>
+          element:<AdminPannel/>,
+          children:[
+            {
+              path:'all-users',
+              element:<AllUsers/>
+            },
+            {
+              path:'all-products',
+              element:<AllProducts/>
+            }
+          ]
         }
       ]
     }

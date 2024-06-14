@@ -7,3 +7,6 @@ body{
     box-sizing: border-box;
     padding-top:64px;
 }
+.boxShadow{
+    box-shadow: 0 0 2em #757693aa;
+}

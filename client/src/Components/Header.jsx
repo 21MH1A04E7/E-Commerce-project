@@ -66,10 +66,10 @@ function Header() {
               )}
             </div>
             {showDisplay ? (
-              <div className="absolute bottom-0 top-12 h-fit bg-[#ecf0f1] p-2 shadow-lg rounded-b-md hover:bg-slate-300 cursor-pointer">
+              <div className="absolute bottom-0 top-12 h-fit bg-[#ecf0f1] p-2 shadow-lg rounded-b-md hover:bg-slate-300 cursor-pointer ">
                 <nav>
                   <Link to={"/admin-pannel"}>
-                    <div className="text-[#080a0c] italic sm:whitespace-nowrap ">
+                    <div className="text-[#080a0c] italic sm:whitespace-nowrap "  onClick={()=>setshowDisplay((pre)=>!pre)}>
                       admin pannel
                     </div>
                   </Link>
