@@ -5,6 +5,7 @@ import { DatabaseConnection } from './config/db.js'
 dotenv.config()
 import cookieParser from 'cookie-parser'
 import authRouter from './routes/auth.js'
+import UserRouter from './routes/user.js'
 
 
 const app=express()
@@ -23,7 +24,9 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 
+//router
 app.use('/api',authRouter)
+app.use('/api',UserRouter)
 
 
 const port=process.env.PORT

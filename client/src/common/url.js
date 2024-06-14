@@ -18,6 +18,10 @@ const Api={
     logout:{
         url:`${backendDomin}/auth/logout`,
         method:"POST"
+    },
+    GetAlluser:{
+        url:`${backendDomin}/user/all-user`,
+        method:"GET"
     }
 }
 
