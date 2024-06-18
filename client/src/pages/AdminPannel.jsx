@@ -1,10 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { FaRegUser } from "react-icons/fa";
-import { Link ,Outlet} from 'react-router-dom';
+import { Link ,Outlet, useNavigate} from 'react-router-dom';
 
 function AdminPannel() {
+  const navigate=useNavigate()
   const user = useSelector((state) => state?.user?.user);
+  if(user?.role!=="ADMINE"){
+    navigate("/")
+    return null;
+  }
   return (
     <div className="min-h-[calc(100vh-140px)]  flex">
       <aside className="w-full max-w-60 md:max-w-80  min-h-full shrink-1 boxShadow">

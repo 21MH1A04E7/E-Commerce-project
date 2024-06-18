@@ -22,6 +22,10 @@ const Api={
     GetAlluser:{
         url:`${backendDomin}/user/all-user`,
         method:"GET"
+    },
+    UpdateUserByAdmine:{
+        url:`${backendDomin}/user/update-user`,
+        method:"POST"
     }
 }
 

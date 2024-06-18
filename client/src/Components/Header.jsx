@@ -54,7 +54,11 @@ function Header() {
         </div>
         <div className="flex items-center gap-2 sm:gap-5">
           <div className="relative flex justify-center">
-            <div className="text-3xl relative flex justify-center items-center cursor-pointer" onClick={()=>setshowDisplay((pre)=>!pre)}>
+          {
+            user?._id&&(<div
+              className="text-3xl relative flex justify-center items-center cursor-pointer"
+              onClick={() => setshowDisplay((pre) => !pre)}
+            >
               {user?.profilepic ? (
                 <img
                   className="w-10 h-10 rounded-full bg-black outline-dotted outline-2 outline-red-300"
@@ -64,19 +68,23 @@ function Header() {
               ) : (
                 <FaRegUser className="text-[#009432]" />
               )}
-            </div>
-            {showDisplay ? (
+            </div>)
+          }
+            {showDisplay && (
               <div className="absolute bottom-0 top-12 h-fit bg-[#ecf0f1] p-2 shadow-lg rounded-b-md hover:bg-slate-300 cursor-pointer ">
                 <nav>
-                  <Link to={"/admin-pannel"}>
-                    <div className="text-[#080a0c] italic sm:whitespace-nowrap "  onClick={()=>setshowDisplay((pre)=>!pre)}>
-                      admin pannel
-                    </div>
-                  </Link>
+                  {user?.role === "ADMINE" &&(
+                    <Link to={"/admin-pannel/all-products"}>
+                      <div
+                        className="text-[#080a0c] italic sm:whitespace-nowrap "
+                        onClick={() => setshowDisplay((pre) => !pre)}
+                      >
+                        admin pannel
+                      </div>
+                    </Link>
+                  )}
                 </nav>
               </div>
-            ) : (
-              ""
             )}
           </div>
           <div className="text-3xl relative">
