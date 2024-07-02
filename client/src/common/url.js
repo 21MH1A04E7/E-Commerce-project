@@ -31,6 +31,10 @@ const Api={
     UploadProductByAdmine:{
         url:`${backendDomin}/product/upload-product`,
         method:"POST"
+    },
+    getAllProduct:{
+        url:`${backendDomin}/product/get-product`,
+        method:"GET"
     }
 }
 

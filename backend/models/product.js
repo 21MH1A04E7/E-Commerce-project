@@ -30,6 +30,6 @@ const mongooseSchema=new mongoose.Schema({
     productDescription:{
         type:String,
     },
-})
+},{timestamps:true})
 const Product=mongoose.model("Product",mongooseSchema);
 export default Product;

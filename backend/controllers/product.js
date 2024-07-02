@@ -35,3 +35,23 @@ export const UploadProduct=async(req,res,next)=>{
         });
     }
 }
+export const getProduct=async(req,res)=>{
+    try{
+        //code to get all products
+    const allProdusts=await Product.find().sort({createaAt:-1})
+    return res.json({
+        success:true,
+        statusCode:200,
+        data:allProdusts,
+        message:"All products fetched successfully!"
+    })
+    }catch(err){
+        console.log("Internal server error in getproduct", err);
+        return res.status(500).json({
+          success: false,
+          statusCode: 500,
+          message: err.message||err,
+        });
+    }
+
+}
