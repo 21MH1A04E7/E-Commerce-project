@@ -4,6 +4,9 @@ import productCategoryList from "../solver/productCategory.js";
 import { FaUpload } from "react-icons/fa";
 import uploadImage from "../solver/uploadImage.js";
 import DisplayImage from "./DisplayImage.jsx";
+import Api from '../common/url.js'
+import {toast } from 'react-toastify';
+
 function UploadProduct({ onClose }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -11,11 +14,11 @@ function UploadProduct({ onClose }) {
     productDescription: "",
     brandName: "",
     productPrice: "",
-    productQuantity: "",
+    // productQuantity: "",
     productImage: [],
     productCategory: "",
     productSelling: "",
-    ProductDiscount: "",
+    // ProductDiscount: "",
   });
   const [displayFullScreen, setDisplayFullScreen] = useState(false);
   const [fullimageurl, setFullimageurl] = useState("");
@@ -50,14 +53,31 @@ function UploadProduct({ onClose }) {
    })
  }
  //upload product
- const handleUploadProduct=(e)=>{
+ const handleUploadProduct=async(e)=>{
   e.preventDefault();
   if(data.productImage.length<=0){
     console.log("pls upload the image");
     return ;
   }
-   // validate form data here
-   // then upload product
+   try{
+    const response=await fetch(Api.UploadProductByAdmine.url,{
+      method:Api.UploadProductByAdmine.method,
+      credentials:'include',
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(data)
+     })
+     const productData=await response.json()
+     if(productData.success){
+      toast.success("product uploaded successfully");
+      onClose();
+     }else{
+      toast.error("not uploaded")
+     }
+   }catch(err){
+    console.log(err)
+   }
  }
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 bg-slate-200 bg-opacity-60 flex justify-center items-center">
@@ -216,7 +236,7 @@ function UploadProduct({ onClose }) {
             value={data.productDescription}
           ></textarea>
 
-          <button className="px-3 py-2 bg-green-500 text-white mb-10 hover:opacity-90 rounded-lg">
+          <button className="px-3 py-2 bg-green-500 text-white mb-10 hover:opacity-90 rounded-lg" disabled={loading}>
             Upload Product
           </button>
         </form>
@@ -231,5 +251,4 @@ function UploadProduct({ onClose }) {
     </div>
   );
 }
-
 export default UploadProduct;

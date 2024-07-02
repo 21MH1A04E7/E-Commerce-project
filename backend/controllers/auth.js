@@ -111,7 +111,7 @@ export const userLogout = async (req, res, next) => {
       data:[]
     });
   } catch (err) {
-    console.error("Internal server error in signup", err);
+    console.log("Internal server error in signup", err);
     return res.status(500).json({
       success: false,
       statusCode: 500,

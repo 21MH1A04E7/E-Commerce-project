@@ -1,4 +1,5 @@
 import { userDetails } from "../../../backend/controllers/userDetails";
+import UploadProduct from "../Components/UploadProduct";
 
 const backendDomin="http://localhost:8000/api"
 
@@ -25,6 +26,10 @@ const Api={
     },
     UpdateUserByAdmine:{
         url:`${backendDomin}/user/update-user`,
+        method:"POST"
+    },
+    UploadProductByAdmine:{
+        url:`${backendDomin}/product/upload-product`,
         method:"POST"
     }
 }

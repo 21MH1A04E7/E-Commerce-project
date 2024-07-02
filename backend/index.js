@@ -6,6 +6,7 @@ dotenv.config()
 import cookieParser from 'cookie-parser'
 import authRouter from './routes/auth.js'
 import UserRouter from './routes/user.js'
+import ProductRouter from './routes/product.js'
 
 
 const app=express()
@@ -27,6 +28,7 @@ app.use(cookieParser())
 //router
 app.use('/api',authRouter)
 app.use('/api',UserRouter)
+app.use('/api',ProductRouter)
 
 
 const port=process.env.PORT
