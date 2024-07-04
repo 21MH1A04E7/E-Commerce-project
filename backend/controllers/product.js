@@ -99,3 +99,29 @@ export const deleteProduct=async(req,res,next)=>{
         });
     }
 }
+export const getAllProductByCategory=async(req,res)=>{
+    try{
+        const distinctCategory=await Product.distinct('productCategory')
+        // console.log(distinctCategory)
+        const productByCategory=[]
+        for(const productCategory of distinctCategory){
+            const product=await Product.findOne({productCategory})
+           if(product){
+            productByCategory.push(product)
+           }
+        }
+        return res.status(200).json({
+            success:true,
+            statusCode:200,
+            data:productByCategory,
+            message:"All products fetched successfully!"
+        })
+    }catch(err){
+        console.log("Internal server error in getAllProductByCategory", err);
+        return res.status(500).json({
+          success: false,
+          statusCode: 500,
+          message: err.message||err,
+        });
+    }
+}

@@ -43,6 +43,10 @@ const Api={
     DeleteProduct:{
         url:`${backendDomin}/product/delete-prodcut`,
         method:"POST"
+    },
+    CategoryProduct:{
+        url:`${backendDomin}/product/get-product-by-category`,
+        method:"GET"
     }
 }
 

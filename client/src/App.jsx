@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setuserDetails } from './store/userSlice.js';
 import AllUsers from './pages/AllUsers.jsx';
 import AllProducts from './pages/AllProducts.jsx'
+import CategoryProductOne from './pages/CategoryProductOne.jsx';
 
 function App() {
   const dispatch=useDispatch()
@@ -57,6 +58,10 @@ function App() {
         {
           path:'/sign-up',
           element:<SignUp/>
+        },
+        {
+          path:'/category-product/:categoryName',
+          element:<CategoryProductOne/>
         },
         {
           path:'/admin-pannel',

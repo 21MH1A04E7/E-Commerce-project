@@ -10,3 +10,6 @@ body{
 .boxShadow{
     box-shadow: 0 0 2em #757693aa;
 }
+.scrollbar-none::-webkit-scrollbar{
+    display: none;
+}

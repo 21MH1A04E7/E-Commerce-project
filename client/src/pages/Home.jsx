@@ -1,8 +1,10 @@
 import React from 'react'
-
+import CategoryListProduct from '../Components/CategoryListProduct.jsx'
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <CategoryListProduct/>
+    </div>
   )
 }
 
