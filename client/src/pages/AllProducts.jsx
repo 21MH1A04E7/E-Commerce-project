@@ -7,7 +7,6 @@ import { set } from "mongoose";
 function AllProducts() {
   const [showUploadProduct, setShowUploadProduct] = useState(false);
   const [allProductsData, setAllProductData] = useState([]);
-
   const fetchAllProducts = async () => {
     try {
       const response = await fetch(Api.getAllProduct.url);
@@ -19,7 +18,6 @@ function AllProducts() {
       console.error("Error fetching products:", error);
     }
   };
-  console.log(allProductsData);
   useEffect(() => {
     fetchAllProducts();
   }, []);
@@ -39,13 +37,13 @@ function AllProducts() {
       <div className="flex items-center flex-wrap gap-3 py-4 h-[calc(100vh-190px)] overflow-y-scroll bg-slate-100">
         {allProductsData.map((product, index) => {
           return (
-            <AdminProductCards data={product} key={index+'allproucts'}/>
+            <AdminProductCards data={product} key={index+'allproucts'} fetchAllProducts={fetchAllProducts}/>
           );
         })}
       </div>
       {/*upload product */}
       {showUploadProduct && (
-        <UploadProduct onClose={() => setShowUploadProduct(false)} />
+        <UploadProduct onClose={() => setShowUploadProduct(false)} fetchAllProducts={fetchAllProducts}/>
       )}
     </div>
   );

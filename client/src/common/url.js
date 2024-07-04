@@ -35,6 +35,10 @@ const Api={
     getAllProduct:{
         url:`${backendDomin}/product/get-product`,
         method:"GET"
+    },
+    UpdateProduct:{
+        url:`${backendDomin}/product/update-product`,
+        method:"POST"
     }
 }
 

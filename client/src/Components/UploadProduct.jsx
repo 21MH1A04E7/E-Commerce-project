@@ -7,7 +7,7 @@ import DisplayImage from "./DisplayImage.jsx";
 import Api from '../common/url.js'
 import {toast } from 'react-toastify';
 
-function UploadProduct({ onClose }) {
+function UploadProduct({ onClose ,fetchAllProducts}) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     productName: "",
@@ -22,8 +22,6 @@ function UploadProduct({ onClose }) {
   });
   const [displayFullScreen, setDisplayFullScreen] = useState(false);
   const [fullimageurl, setFullimageurl] = useState("");
-  console.log(data)
-  console.log(fullimageurl)
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -56,7 +54,7 @@ function UploadProduct({ onClose }) {
  const handleUploadProduct=async(e)=>{
   e.preventDefault();
   if(data.productImage.length<=0){
-    console.log("pls upload the image");
+    toast.info("pls upload the image");
     return ;
   }
    try{
@@ -72,6 +70,7 @@ function UploadProduct({ onClose }) {
      if(productData.success){
       toast.success("product uploaded successfully");
       onClose();
+      fetchAllProducts()
      }else{
       toast.error("not uploaded")
      }

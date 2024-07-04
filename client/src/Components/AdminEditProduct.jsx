@@ -7,9 +7,10 @@ import DisplayImage from "./DisplayImage.jsx";
 import Api from "../common/url.js";
 import { toast } from "react-toastify";
 
-function AdminEditProduct({ onClose, ProductData }) {
+function AdminEditProduct({ onClose, ProductData,fetchAllProducts }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
+    ...ProductData,
     productName: ProductData?.productName,
     productDescription: ProductData?.productDescription,
     brandName: ProductData?.brandName,
@@ -18,16 +19,16 @@ function AdminEditProduct({ onClose, ProductData }) {
     productImage: ProductData?.productImage || [],
     productCategory: ProductData?.productCategory,
     productSelling: ProductData?.productSelling,
+
     // ProductDiscount: "",
   });
   const [displayFullScreen, setDisplayFullScreen] = useState(false);
   const [fullimageurl, setFullimageurl] = useState("");
-  console.log(data);
-  console.log(fullimageurl);
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  //   const [uploadProductImageInput, setUploadProductImageInput] = useState("");
+ 
   // upload image?
   const handleUploadImage = async (e) => {
     const file = e.target.files[0];
@@ -41,6 +42,7 @@ function AdminEditProduct({ onClose, ProductData }) {
     });
     setLoading(false);
   };
+  // console
   //filter
   const handleDeleteProductImage = (index1) => {
     setData((pre) => {
@@ -53,15 +55,15 @@ function AdminEditProduct({ onClose, ProductData }) {
     });
   };
   //upload product
-  const handleUploadProduct = async (e) => {
+  const handleUpdateProduct = async (e) => {
     e.preventDefault();
     if (data.productImage.length <= 0) {
-      console.log("pls upload the image");
+      toast.info("pls upload the image");
       return;
     }
     try {
-      const response = await fetch("", {
-        method: Api.UploadProductByAdmine.method,
+      const response = await fetch(`${Api.UpdateProduct.url}`, {
+        method: Api.UpdateProduct.method,
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -70,10 +72,11 @@ function AdminEditProduct({ onClose, ProductData }) {
       });
       const productData = await response.json();
       if (productData.success) {
-        toast.success("product uploaded successfully");
+        toast.success("product updated successfully");
         onClose();
+        fetchAllProducts();
       } else {
-        toast.error("not uploaded");
+        toast.error("not updated");
       }
     } catch (err) {
       console.log(err);
@@ -94,7 +97,7 @@ function AdminEditProduct({ onClose, ProductData }) {
 
         <form
           className="grid p-4 gap-2 overflow-y-scroll h-full pb-5"
-          onSubmit={handleUploadProduct}
+          onSubmit={handleUpdateProduct}
         >
           <label htmlFor="productName">Product Name :</label>
           <input
@@ -127,7 +130,7 @@ function AdminEditProduct({ onClose, ProductData }) {
           </label>
           <select
             required
-            value={data.category}
+            value={data.productCategory}
             name="productCategory"
             onChange={handleChange}
             className="p-2 bg-slate-100 border rounded"

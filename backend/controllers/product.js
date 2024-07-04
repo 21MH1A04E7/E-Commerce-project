@@ -10,7 +10,7 @@ export const UploadProduct=async(req,res,next)=>{
        //console.log(userid)
        //check if the user is an admin
        if(!await checkAdmin(userid)){
-        return next(handleError("400","only admin can upload the product"))
+        return next(handleError(400,"only admin can upload the product"))
        }
        if(!data.productName||!data.brandName ||!data.productCategory ||!data.productPrice||!data.productImage||!data.productSelling){
             return next(handleError(400, "Please provide all required fields"));
@@ -54,4 +54,27 @@ export const getProduct=async(req,res)=>{
         });
     }
 
+}
+
+export const updateProduct=async(req,res)=>{
+    try{
+        if(!checkAdmin(req.user._id)){
+            return next(handleError(404,"only admin can update the product"))
+        }
+        const {_id,...resBody}=req.body;
+        const updatedProduct=await Product.findByIdAndUpdate(_id,resBody,{new:true})
+        return res.status(200).json({
+            success:true,
+            statusCode:200,
+            data:updatedProduct,
+            message:"Product updated successfully!"
+        })
+    }catch(err){
+        console.log("Internal server error in updateProduct", err);
+        return res.status(500).json({
+          success: false,
+          statusCode: 500,
+          message: err.message||err,
+        });
+    }
 }
