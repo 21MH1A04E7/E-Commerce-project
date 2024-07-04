@@ -5,9 +5,7 @@ import {checkAdmin} from '../solve/adminPermission.js'
 export const UploadProduct=async(req,res,next)=>{
     try{
        const data=req.body;
-    //    console.log(data)
        const userid=req.user._id;
-       //console.log(userid)
        //check if the user is an admin
        if(!await checkAdmin(userid)){
         return next(handleError(400,"only admin can upload the product"))
@@ -84,7 +82,6 @@ export const deleteProduct=async(req,res,next)=>{
             return next(handleError(404,"only admin can delete the product"))
         }
         const {id}=req.params
-        console.log(id)
         const deletedProduct=await Product.findByIdAndDelete(id)
         if(!deletedProduct) return next(handleError(404,"Product not found"))
         return res.status(200).json({
