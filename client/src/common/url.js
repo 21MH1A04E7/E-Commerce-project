@@ -39,6 +39,10 @@ const Api={
     UpdateProduct:{
         url:`${backendDomin}/product/update-product`,
         method:"POST"
+    },
+    DeleteProduct:{
+        url:`${backendDomin}/product/delete-prodcut`,
+        method:"POST"
     }
 }
 

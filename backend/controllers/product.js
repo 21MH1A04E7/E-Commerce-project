@@ -78,3 +78,27 @@ export const updateProduct=async(req,res)=>{
         });
     }
 }
+export const deleteProduct=async(req,res,next)=>{
+    try{
+        if(!checkAdmin(req.user._id)){
+            return next(handleError(404,"only admin can delete the product"))
+        }
+        const {id}=req.params
+        console.log(id)
+        const deletedProduct=await Product.findByIdAndDelete(id)
+        if(!deletedProduct) return next(handleError(404,"Product not found"))
+        return res.status(200).json({
+            success:true,
+            statusCode:200,
+            data:deletedProduct,
+            message:"Product deleted successfully!"
+        })
+    }catch(err){
+        console.log("Internal server error in deleteProduct", err);
+        return res.status(500).json({
+          success: false,
+          statusCode: 500,
+          message: err.message||err,
+        });
+    }
+}
