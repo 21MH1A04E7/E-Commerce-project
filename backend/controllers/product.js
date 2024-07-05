@@ -133,7 +133,7 @@ export const getOneOneProductByCategory = async (req, res) => {
   }
 };
 
-export const getAllProductByCategory = async(req, res) => {
+export const getAllProductByCategory = async (req, res) => {
   try {
     const { productCategory } = req?.body || req?.query;
     const product = await Product.find({ productCategory });
@@ -150,6 +150,25 @@ export const getAllProductByCategory = async(req, res) => {
       success: false,
       statusCode: 500,
       message: err.message || err,
+    });
+  }
+};
+export const getProductDetails = async (req, res) => {
+  try {
+    const { productId } = req.body;
+    const product = await Product.findById(productId);
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data: product,
+      message: "Product details fetched successfully!",
+    });
+  } catch (err) {
+    console.log("Internal server error in getAllProductByCategory", err);
+    return res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: err?.message || err,
     });
   }
 };

@@ -5,14 +5,11 @@ import {changeCurrency} from '../solver/changeCurrency.js'
 import {handleAddToCart} from '../solver/addtocart.js'
 import {Link} from 'react-router-dom'
 
-
-function HorizontalProductCard({ productCategory, heading }) {
+export function CategroyWiseProductDisplay({ productCategory, heading }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const loadingList = new Array(13).fill(null);
 
-  const [scroll, setScroll] = useState(0);
-  const scrollElement = useRef();
 
   const fetchData = async () => {
     setLoading(true);
@@ -37,27 +34,13 @@ function HorizontalProductCard({ productCategory, heading }) {
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
       <div
-        className="flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-none transition-all"
-        ref={scrollElement}
+        className="grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between gap-4 md:gap-6 overflow-scroll scrollbar-none transition-all"
       >
-        <button
-          className="bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block"
-          onClick={scrollLeft}
-        >
-          <FaAngleLeft />
-        </button>
-        <button
-          className="bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block"
-          onClick={scrollRight}
-        >
-          <FaAngleRight />
-        </button>
-
         {loading
           ? loadingList.map((product, index) => {
               return (
-                <div  key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex">
-                  <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse"></div>
+                <div  key={index} className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow">
+                  <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse"></div>
                   <div className="p-4 grid w-full gap-2">
                     <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black bg-slate-200 animate-pulse p-1 rounded-full"></h2>
                     <p className="capitalize text-slate-500 p-1 bg-slate-200 animate-pulse rounded-full"></p>
@@ -74,13 +57,13 @@ function HorizontalProductCard({ productCategory, heading }) {
               return (
                 <Link
                 key={index+product?.productName}
-                  to={"product/" + product?._id}
-                  className="w-full bg-slate-100 min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 rounded-xl shadow-xl flex m-2"
+                  to={"/product/"+product?._id}
+                  className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow-xl m-2"
                 >
-                  <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] rounded-l-xl">
+                  <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center">
                     <img
                       src={product.productImage[0]}
-                      className="object-scale-down h-full hover:scale-110 transition-all"
+                      className="object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply"
                     />
                   </div>
                   <div className="p-4 grid">
@@ -113,4 +96,4 @@ function HorizontalProductCard({ productCategory, heading }) {
   );
 }
 
-export default HorizontalProductCard;
+export default CategroyWiseProductDisplay;

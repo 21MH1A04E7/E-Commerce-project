@@ -14,6 +14,7 @@ import { setuserDetails } from './store/userSlice.js';
 import AllUsers from './pages/AllUsers.jsx';
 import AllProducts from './pages/AllProducts.jsx'
 import CategoryProductOne from './pages/CategoryProductOne.jsx';
+import ProductDetails from './pages/ProductDetails.jsx'
 
 function App() {
   const dispatch=useDispatch()
@@ -62,6 +63,10 @@ function App() {
         {
           path:'/category-product/:categoryName',
           element:<CategoryProductOne/>
+        },
+        {
+          path:'/product/:id',
+          element:<ProductDetails/>
         },
         {
           path:'/admin-pannel',

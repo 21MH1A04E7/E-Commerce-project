@@ -2,24 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import { fetchCategoryWiseProduct } from "../solver/fetchProductCategoryWise.js";
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 import {changeCurrency} from '../solver/changeCurrency.js'
+import {handleAddToCart} from '../solver/addtocart.js'
 import {Link} from 'react-router-dom'
-
 
 function VerticalProductCard({ productCategory, heading }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const loadingList = new Array(13).fill(null);
 
-  console.log("horiz",data)
   const [scroll, setScroll] = useState(0);
   const scrollElement = useRef();
 
   const fetchData = async () => {
     setLoading(true);
     const categoryProduct = await fetchCategoryWiseProduct(productCategory);
-    console.log(productCategory);
     setLoading(false);
-    console.log(categoryProduct);
     setData(categoryProduct?.data);
   };
 
