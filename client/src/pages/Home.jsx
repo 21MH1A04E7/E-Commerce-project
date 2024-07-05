@@ -15,6 +15,10 @@ function Home() {
       <VerticalProductCard productCategory={"refrigerator"} heading={"Top Refrigerator"}/>
       <VerticalProductCard productCategory={"earphones"} heading={"Top Earphones"}/>
       <VerticalProductCard productCategory={"processor"} heading={"Top Processor"}/>
+      <VerticalProductCard productCategory={"camera"} heading={"Top Camera"}/>
+      <VerticalProductCard productCategory={"speakers"} heading={"Top Speaker"}/>
+      <VerticalProductCard productCategory={"televisions"} heading={"Top Television"}/>
+      <VerticalProductCard productCategory={"trimmers"} heading={"Top Trimmer"}/>
     </div>
   )
 }

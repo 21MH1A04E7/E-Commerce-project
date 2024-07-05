@@ -53,7 +53,7 @@ function VerticalProductCard({ productCategory, heading }) {
         </button>
 
         {loading
-          ? loadingList.map((product, index) => {
+          ? loadingList?.map((product, index) => {
               return (
                 <div  key={index} className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow">
                   <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse"></div>
@@ -69,7 +69,7 @@ function VerticalProductCard({ productCategory, heading }) {
                 </div>
               );
             })
-          : data.map((product, index) => {
+          : data?.map((product, index) => {
               return (
                 <Link
                 key={index+product?.productName}
