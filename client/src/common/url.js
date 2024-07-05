@@ -47,7 +47,11 @@ const Api={
     CategoryProduct:{
         url:`${backendDomin}/product/get-product-by-category`,
         method:"GET"
-    }
+    },
+    CategroyWiseProduct:{
+        url:`${backendDomin}/product/get-category-wise-product`,
+        method:"POST"
+    },
 }
 
 export default Api;

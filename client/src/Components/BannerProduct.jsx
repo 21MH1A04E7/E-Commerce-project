@@ -51,7 +51,7 @@ function BannerProduct() {
   return (
     <div className="container mx-auto px-4 rounded-lg overflow-hidden">
       <div className="relative h-56 md:h-72 w-full bg-slate-200">
-        <div className="absolute inset-0 z-10 flex items-center justify-between px-4 md:flex hidden">
+        <div className="absolute inset-0 z-10 items-center justify-between px-4 md:flex hidden">
           <button
             onClick={prevImage}
             className="bg-white shadow-md rounded-full p-1 hover:bg-gray-100"
