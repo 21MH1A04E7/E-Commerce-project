@@ -5,7 +5,7 @@ import {changeCurrency} from '../solver/changeCurrency.js'
 import {Link} from 'react-router-dom'
 
 
-function HorizontalProductCard({ productCategory, heading }) {
+function VerticalProductCard({ productCategory, heading }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const loadingList = new Array(13).fill(null);
@@ -58,8 +58,8 @@ function HorizontalProductCard({ productCategory, heading }) {
         {loading
           ? loadingList.map((product, index) => {
               return (
-                <div  key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex">
-                  <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse"></div>
+                <div  key={index} className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow">
+                  <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse"></div>
                   <div className="p-4 grid w-full gap-2">
                     <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black bg-slate-200 animate-pulse p-1 rounded-full"></h2>
                     <p className="capitalize text-slate-500 p-1 bg-slate-200 animate-pulse rounded-full"></p>
@@ -77,12 +77,12 @@ function HorizontalProductCard({ productCategory, heading }) {
                 <Link
                 key={index+product?.productName}
                   to={"product/" + product?._id}
-                  className="w-full bg-slate-100 min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 rounded-xl shadow-xl flex m-2"
+                  className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow-xl m-2"
                 >
-                  <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] rounded-l-xl">
+                  <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center">
                     <img
                       src={product.productImage[0]}
-                      className="object-scale-down h-full hover:scale-110 transition-all"
+                      className="object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply"
                     />
                   </div>
                   <div className="p-4 grid">
@@ -94,10 +94,10 @@ function HorizontalProductCard({ productCategory, heading }) {
                     </p>
                     <div className="flex gap-3">
                       <p className="text-green-600 font-medium">
-                        {(product?.productSelling)}
+                        {changeCurrency(product?.productSelling)}
                       </p>
                       <p className="text-red-500 line-through">
-                        {(product?.productPrice)}
+                        {changeCurrency(product?.productPrice)}
                       </p>
                     </div>
                     <button
@@ -115,4 +115,4 @@ function HorizontalProductCard({ productCategory, heading }) {
   );
 }
 
-export default HorizontalProductCard;
+export default VerticalProductCard;
