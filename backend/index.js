@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 import authRouter from './routes/auth.js'
 import UserRouter from './routes/user.js'
 import ProductRouter from './routes/product.js'
-
+import CardRouter from './routes/addtocard.js'
 
 const app=express()
 DatabaseConnection(process.env.MONGO_URL)
@@ -29,6 +29,7 @@ app.use(cookieParser())
 app.use('/api',authRouter)
 app.use('/api',UserRouter)
 app.use('/api',ProductRouter)
+app.use('/api',CardRouter)
 
 
 const port=process.env.PORT

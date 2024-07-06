@@ -55,6 +55,18 @@ const Api={
     GetProductDetails:{
         url:`${backendDomin}/product/get-product-details`,
         method:"POST"
+    },
+    AddToCartProduct:{
+        url:`${backendDomin}/Card/add-tocard`,
+        method:"POST"
+    },
+    GetProuductCount:{
+        url:`${backendDomin}/Card/get-product-count`,
+        method:"GET"
+    },
+    GetCartProductView:{
+        url:`${backendDomin}/Card/view-card-product`,
+        method:"GET"
     }
 }
 

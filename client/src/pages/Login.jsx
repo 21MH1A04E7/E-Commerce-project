@@ -13,7 +13,7 @@ function Login() {
   const {loading}=useSelector((state)=>state.user)
 
   const navigate=useNavigate()
-  const {fetchuserDetails}=useContext(AppContext)
+  const {fetchuserDetails,fetchUserAddToCart}=useContext(AppContext)
 
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
@@ -47,6 +47,7 @@ function Login() {
         return 
       }
       fetchuserDetails()
+      fetchUserAddToCart()
       dispatch(loginSuccess())
       toast.success(userres.message)
       navigate('/')

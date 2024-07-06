@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsSearchHeart } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
@@ -7,10 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { setuserDetails } from "../store/userSlice.js";
 import { toast } from "react-toastify";
 import Api from "../common/url.js";
+import AppContext from "../context/index.js";
 
 function Header() {
   const [showDisplay, setshowDisplay] = useState(false);
   const user = useSelector((state) => state?.user?.user);
+  const context = useContext(AppContext);
   const dispatch = useDispatch();
   // console.log(user)
   const handlelogout = async () => {
@@ -28,6 +30,7 @@ function Header() {
       console.log(err);
     }
   };
+  console.log("header", context);
   return (
     <header className="bg-[#c2ecef] shadow-lg h-16 fixed top-0 w-full z-[100]">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
@@ -54,26 +57,26 @@ function Header() {
         </div>
         <div className="flex items-center gap-2 sm:gap-5">
           <div className="relative flex justify-center">
-          {
-            user?._id&&(<div
-              className="text-3xl relative flex justify-center items-center cursor-pointer"
-              onClick={() => setshowDisplay((pre) => !pre)}
-            >
-              {user?.profilepic ? (
-                <img
-                  className="w-10 h-10 rounded-full bg-black outline-dotted outline-2 outline-red-300"
-                  src={user?.profilepic}
-                  alt={user?.username}
-                />
-              ) : (
-                <FaRegUser className="text-[#009432]" />
-              )}
-            </div>)
-          }
+            {user?._id && (
+              <div
+                className="text-3xl relative flex justify-center items-center cursor-pointer"
+                onClick={() => setshowDisplay((pre) => !pre)}
+              >
+                {user?.profilepic ? (
+                  <img
+                    className="w-10 h-10 rounded-full bg-black outline-dotted outline-2 outline-red-300"
+                    src={user?.profilepic}
+                    alt={user?.username}
+                  />
+                ) : (
+                  <FaRegUser className="text-[#009432]" />
+                )}
+              </div>
+            )}
             {showDisplay && (
               <div className="absolute bottom-0 top-12 h-fit bg-[#ecf0f1] p-2 shadow-lg rounded-b-md hover:bg-slate-300 cursor-pointer ">
                 <nav>
-                  {user?.role === "ADMINE" &&(
+                  {user?.role === "ADMINE" && (
                     <Link to={"/admin-pannel/all-products"}>
                       <div
                         className="text-[#080a0c] italic sm:whitespace-nowrap "
@@ -87,15 +90,20 @@ function Header() {
               </div>
             )}
           </div>
-          <div className="text-3xl relative">
+          {user?._id && (
+          <Link to={"/card"} className="text-3xl relative">
             <span>
               <BsCartFill className="text-[#833471]" />
             </span>
-            <div className="bg-[#2124dc] rounded-full flex items-center justify-center w-5 h-5 absolute -top-1 -right-2 ">
-              <p className="text-sm text-white font-semibold">0</p>
-            </div>
-          </div>
+              <div className="bg-[#2124dc] rounded-full flex items-center justify-center w-5 h-5 absolute -top-1 -right-2 ">
+                <p className="text-sm text-white font-semibold">
+                  {context.cartProductCount}
+                </p>
+              </div>
+          </Link>
+           )}
           <div>
+            
             {user?.email ? (
               <Link>
                 <button
