@@ -16,6 +16,7 @@ import AllProducts from "./pages/AllProducts.jsx";
 import CategoryProductOne from "./pages/CategoryProductOne.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import Card from "./pages/Card.jsx";
+import SearchProduct from './pages/SearchProduct.jsx'
 
 function App() {
   const [cartProductCount, setCartProductCount] = useState(0);
@@ -85,6 +86,10 @@ function App() {
         {
           path:"/card",
           element:<Card/>
+        },
+        {
+          path:'/search',
+          element:<SearchProduct/>
         },
         {
           path: "/admin-pannel",

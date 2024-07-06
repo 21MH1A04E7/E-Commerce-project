@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsSearchHeart } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
@@ -14,7 +14,8 @@ function Header() {
   const user = useSelector((state) => state?.user?.user);
   const context = useContext(AppContext);
   const dispatch = useDispatch();
-  
+  const navigate=useNavigate()
+
   const handlelogout = async () => {
     try {
       const response = await fetch(`${Api.logout.url}`, {
@@ -30,7 +31,16 @@ function Header() {
       console.log(err);
     }
   };
-  // console.log("header", context);
+
+  const handdleSearch=(e)=>{
+    const {value}=e.target
+    if(value){
+      navigate(`/search?q=${value}`)
+    }else{
+      navigate('/search')
+    }
+
+  }
   return (
     <header className="bg-[#c2ecef] shadow-lg h-16 fixed top-0 w-full z-[100]">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
@@ -50,6 +60,7 @@ function Header() {
             type="text"
             placeholder="search..."
             className="h-full w-full outline-none px-2 rounded-l-full"
+            onChange={handdleSearch}
           ></input>
           <div className="bg-[#32cc1a] w-12 h-full rounded-r-full flex items-center justify-center text-white cursor-pointer hover:bg-red-500 lg:w-16 active:opacity-25">
             <BsSearchHeart />

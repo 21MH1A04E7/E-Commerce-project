@@ -1,5 +1,6 @@
 import { userDetails } from "../../../backend/controllers/userDetails";
 import UploadProduct from "../Components/UploadProduct";
+import SearchProduct from "../pages/SearchProduct";
 
 const backendDomin="http://localhost:8000/api"
 
@@ -75,6 +76,10 @@ const Api={
     DeleteProductFromCard:{
         url:`${backendDomin}/Card/delete-card-product`,
         method:"POST"
+    },
+    SearchProduct:{
+        url:`${backendDomin}/product/search`,
+        method:"GET"
     }
 
 }

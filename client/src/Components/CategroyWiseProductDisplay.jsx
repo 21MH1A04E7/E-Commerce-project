@@ -5,6 +5,7 @@ import {changeCurrency} from '../solver/changeCurrency.js'
 import {handleAddToCart} from '../solver/addtocart.js'
 import {Link} from 'react-router-dom'
 import AppContext from "../context/index.js";
+import {scrollTop} from "../solver/scrollTop.js"
 
 export function CategroyWiseProductDisplay({ productCategory, heading }) {
   const [data, setData] = useState([]);
@@ -65,6 +66,7 @@ export function CategroyWiseProductDisplay({ productCategory, heading }) {
                 key={index+product?.productName}
                   to={"/product/"+product?._id}
                   className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow-xl m-2"
+                  onClick={scrollTop}
                 >
                   <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center">
                     <img

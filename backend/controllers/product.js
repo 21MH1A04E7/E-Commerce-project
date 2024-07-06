@@ -172,3 +172,39 @@ export const getProductDetails = async (req, res) => {
     });
   }
 };
+
+export const searchProduct = async(req,res)=>{
+  try{
+      const query = req.query.q 
+
+      const regex = new RegExp(query,'i','g')
+
+      const product = await Product.find({
+          "$or" : [
+              {
+                productName : regex
+              },
+              {
+                productCategory : regex
+              }
+          ]
+      })
+
+
+      res.json({
+          data  : product ,
+          message : "Search Product list",
+          error : false,
+          success : true,
+          statusCode : 200
+      })
+  }catch(err){
+    console.log("Internal server error in searchProduct",err)
+      res.json({
+          message : err.message || err,
+          error : true,
+          success : false,
+          statusCode : 500
+      })
+  }
+}
