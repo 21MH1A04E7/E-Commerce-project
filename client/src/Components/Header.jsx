@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsSearchHeart } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
@@ -15,6 +15,10 @@ function Header() {
   const context = useContext(AppContext);
   const dispatch = useDispatch();
   const navigate=useNavigate()
+  const searchInput=useLocation()
+  const [search,SetSearch]=useState(searchInput?.search?.split("=")[1])
+
+  console.log("search input",searchInput?.search.split("=")[1])
 
   const handlelogout = async () => {
     try {
@@ -34,6 +38,7 @@ function Header() {
 
   const handdleSearch=(e)=>{
     const {value}=e.target
+    SetSearch(value)
     if(value){
       navigate(`/search?q=${value}`)
     }else{
@@ -59,6 +64,7 @@ function Header() {
           <input
             type="text"
             placeholder="search..."
+            value={search}
             className="h-full w-full outline-none px-2 rounded-l-full"
             onChange={handdleSearch}
           ></input>
