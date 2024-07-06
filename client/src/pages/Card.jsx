@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import Api from "../common/url.js";
 import AppContext from "../context";
-import {changeCurrency} from "../solver/changeCurrency.js"
+import { changeCurrency } from "../solver/changeCurrency.js";
 import { MdDelete } from "react-icons/md";
 
 function Card() {
@@ -19,12 +19,10 @@ function Card() {
       },
     });
     const responseData = await response.json();
-    console.log(responseData);
     if (responseData.success) {
       setData(responseData.data);
     }
   };
-  console.log("card ", data);
   const handleLoading = async () => {
     await fetchData();
   };
@@ -33,7 +31,72 @@ function Card() {
     setLoading(true);
     handleLoading();
     setLoading(false);
-  },[]);
+  }, []);
+
+  const increaseQty = async (id, qty) => {
+    const response = await fetch(Api.UpdateAddToCartProduct.url, {
+      method: Api.UpdateAddToCartProduct.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+        quantity: qty + 1,
+      }),
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.success) {
+      fetchData();
+    }
+  };
+  const decreaseQty = async (id, qty) => {
+    if (qty >= 2) {
+      const response = await fetch(Api.UpdateAddToCartProduct.url, {
+        method: Api.UpdateAddToCartProduct.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: id,
+          quantity: qty - 1,
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        fetchData();
+      }
+    }
+  };
+
+  const deleteCartProduct = async(id)=>{
+    const response = await fetch(Api.DeleteProductFromCard.url,{
+        method : Api.DeleteProductFromCard.method,
+        credentials : 'include',
+        headers : {
+            "content-type" : 'application/json'
+        },
+        body : JSON.stringify(
+            {   
+                _id : id,
+            }
+        )
+    })
+
+    const responseData = await response.json()
+
+    if(responseData.success){
+        fetchData()
+        context.fetchUserAddToCart()           
+    }
+}
+const totalQty = data.reduce((previousValue,currentValue)=> previousValue + currentValue.quantity,0)
+const totalPrice = data.reduce((preve,curr)=> preve + (curr.quantity * curr?.productId?.productSelling) ,0)
 
   return (
     <div className="container mx-auto mb-20">
@@ -71,7 +134,7 @@ function Card() {
                       {/**delete product */}
                       <div
                         className="absolute right-0 text-red-600 rounded-full p-2 hover:bg-red-600 hover:text-white cursor-pointer"
-                        // onClick={() => deleteCartProduct(product?._id)}
+                        onClick={() => deleteCartProduct(product?._id)}
                       >
                         <MdDelete />
                       </div>
@@ -83,26 +146,31 @@ function Card() {
                         {product?.productId.productCetegroy}
                       </p>
                       <div className="flex items-center justify-between">
-                        <p className="text-red-600 font-medium text-lg">
+                        <p className="text-[#0037ff] font-medium text-lg">
                           {changeCurrency(product?.productId?.productSelling)}
                         </p>
                         <p className="text-slate-600 font-semibold text-lg">
                           {changeCurrency(
-                            product?.productId?.productSelling* product?.quantity
+                            product?.productId?.productSelling *
+                              product?.quantity
                           )}
                         </p>
                       </div>
                       <div className="flex items-center gap-3 mt-1">
                         <button
-                          className="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded "
-                          
+                          className="border-2  border-[#4448ac] text-red-600 hover:bg-green-500 hover:text-white w-6 h-6 flex justify-center items-center rounded "
+                          onClick={() =>
+                            decreaseQty(product?._id, product?.quantity)
+                          }
                         >
                           -
                         </button>
                         <span>{product?.quantity}</span>
                         <button
-                          className="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded "
-                         
+                          className="border-2 border-[#4448ac] text-red-600 hover:bg-green-500 hover:text-white w-6 h-6 flex justify-center items-center rounded "
+                          onClick={() =>
+                            increaseQty(product?._id, product?.quantity)
+                          }
                         >
                           +
                         </button>
@@ -112,22 +180,20 @@ function Card() {
                 );
               })}
         </div>
-
-        **summary 
         <div className="mt-5 lg:mt-0 w-full max-w-sm">
           {loading ? (
             <div className="h-36 bg-slate-200 border border-slate-300 animate-pulse"></div>
           ) : (
             <div className="h-36 bg-white">
-              <h2 className="text-white bg-red-600 px-4 py-1">Summary</h2>
+              <h2 className="text-center text-white bg-[#b15ed2] px-4 py-1">Summary</h2>
               <div className="flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600">
                 <p>Quantity</p>
-                <p>total</p>
+                <p>{totalQty}</p>
               </div>
 
               <div className="flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600">
                 <p>Total Price</p>
-                <p>totalprice</p>
+                <p>{changeCurrency(totalPrice)}</p>
               </div>
 
               <button className="bg-blue-600 p-2 text-white w-full mt-2">

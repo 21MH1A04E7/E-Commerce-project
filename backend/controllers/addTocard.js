@@ -117,3 +117,28 @@ export const updateAddToCartProduct = async(req,res)=>{
       })
   }
 }
+export const deleteAddToCartProduct = async(req,res)=>{
+  try{
+      const currentUserId = req.user_id
+      const addToCartProductId = req.body._id
+
+      const deleteProduct = await addToCardProduct.deleteOne({ _id : addToCartProductId})
+
+      res.json({
+          message : "Product Deleted From Cart",
+          error : false,
+          success : true,
+          data : deleteProduct,
+          statusCode:200
+      })
+
+  }catch(err){
+    console.log("internal server in delete from cart");
+      res.json({
+          message : err?.message || err,
+          error : true,
+          success : false,
+          statusCode:500
+      })
+  }
+}

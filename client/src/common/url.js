@@ -67,7 +67,16 @@ const Api={
     GetCartProductView:{
         url:`${backendDomin}/Card/view-card-product`,
         method:"GET"
+    },
+    UpdateAddToCartProduct:{
+        url:`${backendDomin}/Card/update-card-product`,
+        method:"POST"
+    },
+    DeleteProductFromCard:{
+        url:`${backendDomin}/Card/delete-card-product`,
+        method:"POST"
     }
+
 }
 
 export default Api;

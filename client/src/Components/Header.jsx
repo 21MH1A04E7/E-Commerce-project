@@ -14,7 +14,7 @@ function Header() {
   const user = useSelector((state) => state?.user?.user);
   const context = useContext(AppContext);
   const dispatch = useDispatch();
-  // console.log(user)
+  
   const handlelogout = async () => {
     try {
       const response = await fetch(`${Api.logout.url}`, {
@@ -30,7 +30,7 @@ function Header() {
       console.log(err);
     }
   };
-  console.log("header", context);
+  // console.log("header", context);
   return (
     <header className="bg-[#c2ecef] shadow-lg h-16 fixed top-0 w-full z-[100]">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
