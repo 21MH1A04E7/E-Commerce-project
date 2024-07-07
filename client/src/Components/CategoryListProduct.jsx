@@ -39,7 +39,7 @@ function CategoryListProduct() {
           : categoryProduct.map((product, index) => {
               return (
                 <Link
-                  to={"/category-product/" + product?.productCategory}
+                  to={"/product-category?category=" + product?.productCategory}
                   key={index}
                   className="cursor-pointer"
                 >

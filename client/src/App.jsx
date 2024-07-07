@@ -76,7 +76,7 @@ function App() {
           element: <SignUp />,
         },
         {
-          path: "/category-product/:categoryName",
+          path: "/product-category",
           element: <CategoryProductOne />,
         },
         {

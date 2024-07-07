@@ -5,7 +5,7 @@ import HorizontalProductCard from '../Components/HorizontalProductCard.jsx'
 import VerticalProductCard from '../Components/VerticalProductCard.jsx'
 function Home() {
   return (
-    <div className='mb-28'>
+    <div className=''>
       <CategoryListProduct/>
       <BannerProduct/>
       <HorizontalProductCard productCategory={"airpods"} heading={"Top Airpods"}/>

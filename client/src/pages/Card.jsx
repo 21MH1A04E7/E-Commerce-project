@@ -99,7 +99,7 @@ const totalQty = data.reduce((previousValue,currentValue)=> previousValue + curr
 const totalPrice = data.reduce((preve,curr)=> preve + (curr.quantity * curr?.productId?.productSelling) ,0)
 
   return (
-    <div className="container mx-auto mb-20">
+    <div className="container mx-auto ">
       <div className="text-center text-lg my-3">
         {data.length === 0 && !loading && (
           <p className="bg-white py-5">No Data</p>

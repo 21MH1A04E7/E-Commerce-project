@@ -19,7 +19,7 @@ DatabaseConnection(process.env.MONGO_URL)
 })
 
 app.use(cors({
-    origin: 'http://localhost:5174', // Update to your front-end URL
+    origin: 'http://localhost:5173', // Update to your front-end URL
     credentials: true,
 }))
 app.use(express.json())

@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Api from "../common/url.js";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
 import { changeCurrency } from "../solver/changeCurrency.js";
-import {CategroyWiseProductDisplay} from '../Components/CategroyWiseProductDisplay.jsx'
+import { CategroyWiseProductDisplay } from "../Components/CategroyWiseProductDisplay.jsx";
+import AppContext from "../context/index.js";
+import { handleAddToCart } from "../solver/addtocart.js";
 
 function ProductDetails() {
   const [data, setData] = useState({
@@ -21,6 +23,7 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const productImageListLoading = new Array(4).fill(null);
   const [activeImage, setActiveImage] = useState("");
+  const { fetchUserAddToCart } = useContext(AppContext);
 
   const [zoomImageCoordinate, setZoomImageCoordinate] = useState({
     x: 0,
@@ -70,8 +73,12 @@ function ProductDetails() {
   const handleMouseEnterProduct = (imageURL) => {
     setActiveImage(imageURL);
   };
+  const AddToCart = async (e, id) => {
+    await handleAddToCart(e, id);
+    await fetchUserAddToCart();
+  };
   return (
-    <div className="container mx-auto px-4 my-4 mb-36">
+    <div className="container mx-auto px-4 my-4 ">
       <div className="min-h-[200px] flex flex-col lg:flex-row gap-4">
         {/***product Image */}
         <div className="h-96 flex flex-col lg:flex-row-reverse gap-4">
@@ -185,15 +192,12 @@ function ProductDetails() {
             </div>
 
             <div className="flex items-center gap-3 my-2">
-              <button
-                className="border-2 border-green-500 rounded px-3 py-1 min-w-[120px] text-green-600 font-medium hover:bg-green-600 hover:text-white"
-                onClick={(e) => handleBuyProduct(e, data?._id)}
-              >
+              <button className="border-2 border-green-500 rounded px-3 py-1 min-w-[120px] text-green-600 font-medium hover:bg-green-600 hover:text-white">
                 Buy
               </button>
               <button
                 className="border-2 border-blue-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-blue-600 hover:text-blue-600 hover:bg-white"
-                onClick={(e) => handleAddToCart(e, data?._id)}
+                onClick={(e) => AddToCart(e, data?._id)}
               >
                 Add To Cart
               </button>
@@ -206,11 +210,12 @@ function ProductDetails() {
           </div>
         )}
       </div>
-      {
-        data.productCategory && (
-          <CategroyWiseProductDisplay  productCategory={data?.productCategory} heading={"Recommended Product"}/>
-        )
-      }
+      {data.productCategory && (
+        <CategroyWiseProductDisplay
+          productCategory={data?.productCategory}
+          heading={"Recommended Product"}
+        />
+      )}
     </div>
   );
 }

@@ -173,38 +173,62 @@ export const getProductDetails = async (req, res) => {
   }
 };
 
-export const searchProduct = async(req,res)=>{
-  try{
-      const query = req.query.q 
+export const searchProduct = async (req, res) => {
+  try {
+    const query = req.query.q;
 
-      const regex = new RegExp(query,'i','g')
+    const regex = new RegExp(query, "i", "g");
 
-      const product = await Product.find({
-          "$or" : [
-              {
-                productName : regex
-              },
-              {
-                productCategory : regex
-              }
-          ]
-      })
+    const product = await Product.find({
+      $or: [
+        {
+          productName: regex,
+        },
+        {
+          productCategory: regex,
+        },
+      ],
+    });
 
-
-      res.json({
-          data  : product ,
-          message : "Search Product list",
-          error : false,
-          success : true,
-          statusCode : 200
-      })
-  }catch(err){
-    console.log("Internal server error in searchProduct",err)
-      res.json({
-          message : err.message || err,
-          error : true,
-          success : false,
-          statusCode : 500
-      })
+    res.json({
+      data: product,
+      message: "Search Product list",
+      error: false,
+      success: true,
+      statusCode: 200,
+    });
+  } catch (err) {
+    console.log("Internal server error in searchProduct", err);
+    res.json({
+      message: err.message || err,
+      error: true,
+      success: false,
+      statusCode: 500,
+    });
   }
-}
+};
+export const filterProductController = async (req, res) => {
+  try {
+    const categoryList = req?.body?.category || [];
+
+    const product = await Product.find({
+      productCategory: {
+        $in: categoryList,
+      },
+    });
+
+    res.json({
+      data: product,
+      message: "product",
+      error: false,
+      success: true,
+      statusCode:200,
+    });
+  } catch (err) {
+    res.json({
+      message: err.message || err,
+      error: true,
+      success: false,
+    });
+  }
+};

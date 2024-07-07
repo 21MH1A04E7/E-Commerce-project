@@ -16,9 +16,11 @@ function Header() {
   const dispatch = useDispatch();
   const navigate=useNavigate()
   const searchInput=useLocation()
-  const [search,SetSearch]=useState(searchInput?.search?.split("=")[1])
+  const UrlSearch=new URLSearchParams(searchInput?.search)
+  const SearchQuery=UrlSearch.getAll("q")
+  const [search,SetSearch]=useState(SearchQuery)
 
-  console.log("search input",searchInput?.search.split("=")[1])
+  // console.log("search input",searchInput?.search.split("=")[1])
 
   const handlelogout = async () => {
     try {
@@ -44,8 +46,8 @@ function Header() {
     }else{
       navigate('/search')
     }
-
   }
+
   return (
     <header className="bg-[#c2ecef] shadow-lg h-16 fixed top-0 w-full z-[100]">
       <div className="container mx-auto flex items-center h-full justify-between px-2 sm:px-8">
@@ -60,7 +62,7 @@ function Header() {
             </span>
           </div>
         </Link>
-        <div className="hidden sm:flex items-center h-10 bg-slate-300 rounded-full w-60 justify-between lg:w-[400px] hover:shadow-md mx-auto max-w-xl">
+        <div className="flex items-center h-8 sm:h-10 bg-slate-300 rounded-full w-32 sm:w-60 justify-between  lg:w-[400px] hover:shadow-md mx-auto max-w-xl">
           <input
             type="text"
             placeholder="search..."
@@ -68,7 +70,7 @@ function Header() {
             className="h-full w-full outline-none px-2 rounded-l-full"
             onChange={handdleSearch}
           ></input>
-          <div className="bg-[#32cc1a] w-12 h-full rounded-r-full flex items-center justify-center text-white cursor-pointer hover:bg-red-500 lg:w-16 active:opacity-25">
+          <div className="bg-[#32cc1a] w-8 sm:w-12 h-full rounded-r-full flex items-center justify-center text-white cursor-pointer hover:bg-red-500 lg:w-16 active:opacity-25">
             <BsSearchHeart />
           </div>
         </div>

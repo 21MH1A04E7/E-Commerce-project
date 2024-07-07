@@ -80,8 +80,11 @@ const Api={
     SearchProduct:{
         url:`${backendDomin}/product/search`,
         method:"GET"
+    },
+    filterProduct:{
+        url:`${backendDomin}/product/filter-product`,
+        method:"POST"
     }
-
 }
 
 export default Api;
